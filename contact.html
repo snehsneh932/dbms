@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact-DBMS Guide</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #06172b;
+      color: #70a4d9;
+      min-height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 229, 255, 0.03),
+        rgba(0, 229, 255, 0.03) 1px,
+        transparent 1px,
+        transparent 20px
+      );
+      animation: scan 10s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes scan {
+      0% { background-position: 0 0; }
+      100% { background-position: 0 100%; }
+    }
+
+    .container {
+      margin-top: 2rem;
+      max-width: 800px;
+      background: #06172b;
+      padding: 3rem;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(0, 229, 255, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: 2.4rem;
+      color: #00ffe5d5;
+      text-align: center;
+      margin-bottom: 2rem;
+      text-shadow: 0 0 10px #cdd8d788;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 3px solid #00ffe5;
+      width: 0;
+      animation: typing 3s steps(30, end) forwards, blink 0.7s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    p {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      color: #ffffff;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .info {
+      margin-top: 1rem;
+      background-color: #0a0f14;
+      padding: 2rem;
+      border-left: 5px solid #00e5ff;
+      border-radius: 14px;
+      box-shadow: 0 0 25px rgba(211, 216, 217, 0.15);
+      text-align: left;
+    }
+
+    .info p {
+      margin-bottom: 0.8rem;
+      font-size: 1rem;
+      color: #9deef4;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.75rem 1.5rem;
+      color: #00e5ff;
+      border: 2px solid #00e5ff;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s ease;
+      text-align: center;
+    }
+
+    .back-btn:hover {
+      background-color: rgba(0, 255, 255, 0.1);
+      box-shadow: 0 0 12px rgba(0, 229, 255, 0.4);
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Thanks for Watching!</h1>
+    <p>DBMS PROJECT</p>
+
+    <div class="info">
+      <p><strong>Name:</strong> SNEH</p>
+      <p><strong>Class:</strong> BCA Sem-IV</p>
+      <p><strong>Roll No:</strong> 4063/23</p>
+      <p><strong>Submitted to:</strong> Mr. Chetan Gupta Sir</p>
+    </div>
+
+    <div class="footer">
+      <a href="index.html" class="back-btn">← Back to Home</a>
+    </div>
+  </div>
+</body>
+</html>

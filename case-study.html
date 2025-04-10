@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CASE STUDY</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #06172b;
+            color: #5383ad;
+            min-height: 100vh;
+            padding: 5rem 2rem 4rem;
+        }
+
+        header {
+            width: 100%;
+            background-color: #06172b;
+            padding: 1rem 2rem;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(3, 15, 17, 0.15);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #00e5ff;
+            text-shadow: 0 0 12px rgba(0, 255, 255, 0.8);
+        }
+
+        .main-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            margin-top: 2rem;
+            background: rgba(69, 79, 89, 0.96);
+            padding: 3rem;
+            border-radius: 30px;
+            box-shadow: 0 0 35px rgba(0, 229, 255, 0.3);
+            border: 1.5px solid rgba(0, 229, 255, 0.25);
+            animation: pulse-glow 3s infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            from {
+                box-shadow: 0 0 30px rgba(0, 229, 255, 0.25);
+                border-color: rgba(0, 229, 255, 0.20);
+            }
+
+            to {
+                box-shadow: 0 0 45px rgba(0, 229, 255, 0.4);
+                border-color: rgba(0, 229, 255, 0.35);
+            }
+        }
+
+        h1 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            color: #00e5ff;
+            text-shadow: 0 0 15px rgba(0, 255, 255, 1);
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .module {
+            margin-bottom: 2rem;
+        }
+
+        .module h2 {
+            font-size: 1.3rem;
+            color: #00e5ff;
+            margin-bottom: 0.8rem;
+            border-left: 4px solid #00e5ff;
+            padding-left: 1rem;
+            text-shadow: 0 0 5px rgba(0, 229, 255, 0.5);
+        }
+
+        .module p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #e0f7ff;
+            margin-bottom: 1rem;
+            padding-left: calc(1rem + 4px);
+        }
+
+        pre {
+            background-color: #0f1117;
+            padding: 1rem 1.2rem;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            border-left: 3px solid #00e5ff;
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+            color: #c3f4ff;
+            margin-bottom: 1.5rem;
+        }
+
+        .scroll-button {
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            background: #00e5ff;
+            color: #000;
+            padding: 0.8rem 1.4rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 0 18px rgba(0, 229, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 999;
+            border: none;
+        }
+
+        .scroll-button:hover {
+            background: #00b3cc;
+            box-shadow: 0 0 25px rgba(0, 229, 255, 1);
+        }
+
+        .footer-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-top: 3rem;
+        }
+
+        .footer-buttons a {
+            text-decoration: none;
+            color: #00e5ff;
+            border: 2px solid #00e5ff;
+            padding: 0.6rem 1.4rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .footer-buttons a:hover {
+            background: rgba(0, 229, 255, 0.15);
+            box-shadow: 0 0 18px rgba(0, 229, 255, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">CASE STUDY</div>
+    </header>
+
+    <button id="scrollToEnd" class="scroll-button" onclick="scrollToEnd()">To the End ↓</button>
+    <button id="scrollToTop" class="scroll-button" onclick="scrollToTop()" style="display: none;">Back to Top ↑</button>
+
+    <script>
+        const scrollToEndBtn = document.getElementById("scrollToEnd");
+        const scrollToTopBtn = document.getElementById("scrollToTop");
+
+        function scrollToEnd() {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        window.addEventListener("scroll", () => {
+            const scrollPosition = window.innerHeight + window.scrollY;
+            const nearBottom = document.body.offsetHeight - 50;
+
+            if (scrollPosition >= nearBottom) {
+                scrollToEndBtn.style.display = "none";
+                scrollToTopBtn.style.display = "block";
+            } else {
+                scrollToEndBtn.style.display = "block";
+                scrollToTopBtn.style.display = "none";
+            }
+        });
+    </script>
+
+</body>
+
+</html>
+
+
+
+
+
+<div class="main-container">
+
+
+
+
+    <div class="module">
+        <h2>1st Report</h2>
+        <pre>
+        <img src = "TABLE.jpg"
+        width="600 px">
+    </pre>
+    </div>
+
+    <div class="module">
+        <h2>1 - 1st position </h2>
+        <p>
+            This query calculates the total marks of each student from four subjects and returns the student who scored
+            the highest. It's useful for identifying the class topper based on overall academic performance.
+        </p>
+        <pre>
+            <img src="1st position.jpg"
+            width="600px">
+        </pre>
+        <p>
+            EXPLANATION: <br>
+            1. SELECT roll_no, name, (dbms + os + spm + pun) AS total_marks<br>
+            Selects roll number and name of the student.<br>
+            Calculates total marks by adding scores from DBMS, OS, SPM, and PUN.
+            Gives the total a temporary name: total_marks.<br>
+            2. FROM students<br>
+            Indicates the data source is the students table.<br>
+            3. ORDER BY total_marks DESC<br>
+            Sorts the students by total marks in descending order (highest first).<br>
+            4. LIMIT 1<br>
+            Restricts the result to only the top 1 student — the one with the highest total marks.<br>
+        </p>
+    </div>
+
+    <div class="module">
+        <h2>2 - 2nd position </h2>
+        <p>This query finds the student who has the second highest total marks by excluding the top scorer using a
+            subquery. It's helpful for generating rank lists or award selections.
+        </p>
+        <pre>
+            <img src="2nd position.jpg"
+            width="700 px">
+        </pre>
+        <P> EXPLANATION<BR>
+            1. (dbms + os + spm + pun) AS total_marks<BR>
+            Calculates the total marks of each student.<BR>
+            2. WHERE total_marks < (SELECT MAX(...))<BR>
+                Filters out the student who has the highest total marks.<BR>
+                3. Subquery:<BR>
+                SELECT MAX(...) finds the highest total marks (1st position).<BR>
+                4. ORDER BY total_marks DESC<BR>
+                Sorts the remaining students from highest to lowest.<BR>
+                5. LIMIT 1<BR>
+                Returns only the student with the second highest total marks.<BR></P>
+    </div>
+
+
+
+    <div class="module">
+        <h2>3 - 3rd position </h2>
+        <p>
+            This query retrieves the student who secured the third highest total marks by excluding the top two totals
+            using nested subqueries.
+        </p>
+        <pre>
+            <img src="3rd position.jpg"
+            width="700 px">
+        </pre>
+        <p>
+            Explanation:<br>
+            1. Inner-most Subquery<br>
+            Finds the highest total marks (1st position).<br>
+            2. Middle Subquery<br>
+            Excludes the top scorer and finds the 2nd highest total.<br>
+            3. Outer Query<br>
+            Excludes the top two scores and selects the next highest — the 3rd position.<br>
+            4. ORDER BY total_marks DESC<br>
+            Sorts the eligible students from highest to lowest.<br>
+            5. LIMIT 1<br>
+            Returns the student with the third highest total.<br>
+        </p>
+    </div>
+
+
+
+    <div class="module">
+        <h2>4 - 1st position in DBMS </h2>
+        <p> This query identifies the student who scored the highest marks in the DBMS subject. It's useful for
+            subject-wise toppers and performance analysis.
+        </p>
+        <pre>
+            <img src="1st dbms.png"
+            width="700px">
+        </pre>
+        <p>
+            Explanation:<br>
+            1. SELECT roll_no, name, dbms AS marks<br>
+            Retrieves the roll number, name, and DBMS marks of students.<br>
+            2. FROM students<br>
+            Specifies the table where student records are stored.<br>
+            3. WHERE dbms = (SELECT MAX(dbms) FROM students)<br>
+            Filters to only include the student(s) who got the maximum marks in DBMS.<br>
+        </p>
+    </div>
+
+
+    <div class="module">
+        <h2>5 - 2nd position in DBMS </h2>
+        <p> To find the student who scored the second highest marks in DBMS, we use a subquery to first exclude the
+            highest mark, and then find the next maximum. This helps in identifying the runner-up in that subject.
+        </p>
+        <pre>
+            <img src="2nd dbms.png"
+            width="700px">
+        </pre>
+        <p>
+            Explanation:<br>
+            1. SELECT MAX(dbms) FROM students<br>
+            Finds the highest DBMS mark in the class.<br>
+            2. WHERE dbms < (highest mark)<br>
+                Filters out the top scorer(s).<br>
+                3. MAX(dbms) from the filtered list<br>
+                Finds the second highest mark.<br>
+                4. Main Query<br>
+                Selects the student(s) who scored exactly that second highest mark in DBMS.<br>
+        </p>
+    </div>
+
+
+
+    <div class="module">
+        <h2>6 - 3rd position in DBMS </h2>
+        <p> To get the 3rd highest marks in the DBMS subject, we use nested subqueries to remove the top two highest
+            marks and then find the next maximum. This allows us to accurately identify the student ranked third in
+            DBMS.
+        </p>
+        <pre>
+            <img src="3rd dbms.png"
+            width="700px">
+        </pre>
+        <p>
+            Explanation:<br>
+            1. Innermost subquery:<br>
+            SELECT MAX(dbms) FROM students<br>
+            Finds the highest DBMS mark.<br>
+            2. Second subquery:<br>
+            SELECT MAX(dbms) FROM students WHERE dbms < (1st highest)<br>
+                Finds the 2nd highest DBMS mark.<br>
+                3. Outer subquery:<br>
+                SELECT MAX(dbms) FROM students WHERE dbms < (2nd highest)<br>
+                    Finds the 3rd highest DBMS mark.<br>
+                    4. Main query:<br>
+                    Returns the roll_no, name, and dbms mark of the student(s) with that 3rd highest score.<br>
+        </p>
+    </div>
+
+    <div class="module">
+        <h2>7 - 1st position in OS </h2>
+        <p> This query is used to find the student who scored the highest marks in the OS subject. It helps identify the
+            subject-wise topper.
+        </p>
+        <pre>
+            <img src="1st OS.png"
+            width="700px">
+        </pre>
+        <p>
+            EXPLANATION:<br>
+            1. SELECT MAX(os) FROM students<br>
+            Finds the maximum marks in the OS subject.<br>
+            2. WHERE os = (...)<br>
+            Filters the student whose OS marks match the highest value.<br>
+            3. SELECT roll_no, name, os<br>
+            Displays the roll number, name, and OS marks of the top scorer.<br>
+        </p>
+    </div>
+
+
+    <div class="module">
+        <h2>Ques8 - 2nd position in OS </h2>
+        <p> This query finds the student who scored the second highest marks in the OS subject by excluding the top
+            mark.
+        </p>
+        <pre>
+            <img src="2nd os.png"
+            width="700px">
+        </pre>
+        <p>
+            EXPLANATION:<br>
+            1. SELECT MAX(os) FROM students<br>
+            Gets the highest OS mark.<br>
+            2. WHERE os < (highest)<br>
+                Excludes the top score.<br>
+                3. MAX(os) on the filtered result<br>
+                Gives the 2nd highest OS mark.<br>
+                4. Main query<br>
+                Shows the student whose OS mark matches the second highest.<br>
+
+        </p>
+    </div>
+
+    <div class="module">
+        <h2>9 - 3rd position in OS </h2>
+        <p>
+            This query finds the student who scored the third highest marks in OS by removing the top two scores.
+
+        </p>
+        <pre>
+            <img src="3rd os.png"
+            width="700px">
+        </pre>
+        <p>
+            EXPLANATION:<br>
+            1. First MAX(os)<br>
+            Gets the top score.<br>
+            2. Second MAX(os)<br>
+            Finds the 2nd highest, excluding the top one.<br>
+            3. Third MAX(os)<br>
+            Finds the 3rd highest, excluding top two.<br>
+            4. Main query<br>
+            Returns the student(s) who scored the 3rd highest in OS.<br>
+        </p>
+    </div>
+
+
+    <div class="module">
+        <h2>10 - 1st position in SPM </h2>
+        <p>This query finds the student who got the highest marks in the SPM subject using the MAX() function.
+        </p>
+        <pre>
+            <img src="1st SPM.png"
+            width="700px">
+        </pre>
+        <p>
+            EXPLANATION:<br>
+            1. SELECT MAX(spm) FROM students<br>
+            Gets the highest mark scored in the SPM subject.<br>
+            2. WHERE spm = (...)<br>
+            Filters student(s) whose SPM marks match that maximum.<br>
+            3. Main query<br>
+            Shows roll number, name, and SPM marks of the top scorer.<br>
+
+        </p>
+    </div>
+
+    <div class="module">
+        <h2>11 - 2nd position in SPM </h2>
+        <p>
+            This query finds the student who scored the second highest marks in the SPM subject by excluding the top
+            mark.
+        </p>
+        <pre>
+            <img src="2nd spm.png"
+            width="700px">
+        </pre>
+        <p>
+            EXPLANATION:<br>
+            1. SELECT MAX(spm)<br>
+            Gets the highest SPM score.<br>
+            2. WHERE spm < (MAX)<br>
+                Excludes the top score to focus on others.<br>
+                3. Outer MAX(spm)<br>
+                Finds the 2nd highest score.<br>
+                4. Main query<br>
+                Shows student(s) with that score.<br>
+        </p>
+    </div>
+
+    <div class="module">
+        <h2>12 - 3rd position in SPM </h2>
+        <p>
+            This query finds the student who scored the third highest marks in OS by removing the top two scores
+        </p>
+        <pre>
+            <img src="3rd som.png"
+            width="700px">
+        </pre>
+        <p>
+            EXPLANATION:<br>
+            1. Innermost MAX(spm)<br>
+            Gets the highest SPM mark.<br>
+            2. Middle MAX(spm)<br>
+            Excludes the top score to get the 2nd highest.<br>
+            3. Outer MAX(spm)<br>
+            Excludes top two scores to get the 3rd highest<br>
+            4. Main query<br>
+            Shows the student(s) whose SPM marks equal the 3rd highest<br>
+        </p>
+    </div>
+
+    <div class="module">
+        <h2>13 - 1st position in PUN </h2>
+        <p>
+            This query finds the student who got the highest marks in the PUN subject using the MAX() function.
+
+        </p>
+        <pre>
+            <img src="1st PUN.png"
+            width="700px">
+        </pre>
+        <p>
+            EXPLANATION:<br>
+            1. SELECT MAX(pun)<br>
+            Finds the highest marks scored in the PUN subject.<br>
+            2. WHERE pun = (...)<br>
+            Filters and selects student(s) whose PUN marks match the highest.<br>
+            3. Main query<br>
+            Displays the roll number, name, and PUN marks of the top scorer(s).<br>
+        </p>
+    </div>
+
+    <div class="module">
+        <h2>14 - 2nd position in PUN </h2>
+        <p>
+            This query finds the student who scored the second highest marks in the PUN subject by excluding the top
+            mark.
+        </p>
+        <pre>
+            <img src="2nd pun.png"
+            width="700px">
+        </pre>
+        <p>
+            EXPLANATION:<br>
+            1. SELECT MAX(pun)<br>
+            Gets the highest marks in PUN.<br>
+            2. WHERE pun < (MAX)<br>
+                Excludes the top score to focus on the rest.<br>
+                3. Outer MAX(pun)<br>
+                Finds the 2nd highest PUN mark.<br>
+                4. Main query<br>
+                Returns student(s) whose PUN marks match the second highest<br>
+        </p>
+    </div>
+
+    <div class="module">
+        <h2>Ques14 - 3rd position in PUN </h2>
+        <p>
+            This query finds the student who scored the third highest marks in PUN by removing the top two scores
+        </p>
+        <pre>
+            <img src="3rd pun.png"
+            width="700px">
+        </pre>
+        <p>
+            EXPLANATION:<br>
+            1. Innermost MAX(pun)<br>
+            Gets the highest PUN mark.<br>
+            2. Middle MAX(pun)<br>
+            Excludes the top mark to find the 2nd highest.<br>
+            3. Outer MAX(pun)<br>
+            Excludes top two scores to get the 3rd highest.<br>
+            4. Main query<br>
+            Selects student(s) whose PUN mark equals the third highest.<br>
+
+        </p>
+    </div>
+
+
+    <div class="module">
+        <h2>2nd Report</h2>
+
+
+        <div class="module">
+            <h2> </h2>
+            <p>
+                The SQL query is used to find the student(s) who got
+                the same total marks in the marks table.
+
+            </p>
+            <pre>
+                <img src="avg.png"
+                width="700px">
+            </pre>
+
+            <div class="module">
+                <h2> 1. Why Use (dbms + os + spm + pun) Instead of a Separate Column? </h2>
+                <p>
+                    You're calculating total marks by summing subject columns
+                </p>
+                <pre>
+                    <img src="step1.png"
+                    width="700px">
+                </pre>
+                <p>
+                    This method is:<br>
+Dynamic: You don’t need to create a new column in the table.<br>
+Efficient for Ad Hoc Queries: Great for quick reports or one-time queries.<br>
+But if used frequently, it's better to store total_marks as a computed or stored column to avoid recalculating<br>
+                </p>
+                </div>
+
+                <div class="module">
+                    <h2> 2. How Does SQL Execute This Query Internally? </h2>
+                    <p>
+                        1.Start from the innermost query:
+                    </p>
+                    <pre>
+                        <img src="step2.png"
+                        width="700px">
+                    </pre>
+                    <p>
+                        2.second subquery filters out the highest and gets second highest.<br>
+3.Third subquery filters out the top two and gets the third highest.<br>
+4.Final outer query compares each student's total with the third highest:<br>
+                    </p>
+                    <pre>
+                    <img src="step3.png"
+                    width="600px">
+                    </pre>
+                    <p>
+                        5.Returns all students with that total, including if there’s a tie.
+                    </p>
+                    </div>
+
+                <div class="footer-buttons">
+                    <a href="index.html">← Back to Home</a>
+                </div>
+            </div>
+            </body>
+
+            </html>
+        </div>

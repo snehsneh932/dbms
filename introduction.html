@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Geek DBMS Guide - Introduction</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Space Grotesk', 'Poppins', sans-serif;
+      background-color: #000;
+      color: #d1d5db;
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding: 1rem;
+      animation: bgShift 10s linear infinite alternate;
+    }
+
+    @keyframes bgShift {
+      0% { background-color: #000; }
+      100% { background-color: #050505; }
+    }
+
+    .content {
+      max-width: 900px;
+      margin: 3rem auto;
+      padding: 2.5rem 3rem;
+      background: linear-gradient(145deg, #0f0f0f, #000000);
+      border-radius: 18px;
+      border: 1px solid rgba(0, 229, 255, 0.35);
+      box-shadow: 0 0 75px rgba(0, 229, 255, 0.45), 0 0 95px rgba(0, 229, 255, 0.15) inset;
+      font-size: 0.95rem;
+      line-height: 1.8;
+      animation: slideIn 1s ease-out, pulseGlow 4s ease-in-out infinite;
+    }
+
+    @keyframes slideIn {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 55px rgba(0, 229, 255, 0.3), 0 0 75px rgba(0, 229, 255, 0.12) inset; }
+      50% { box-shadow: 0 0 75px rgba(0, 229, 255, 0.5), 0 0 90px rgba(0, 229, 255, 0.2) inset; }
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.8rem;
+      color: #00e5ff;
+      margin-bottom: 2.5rem;
+      text-shadow: 0 0 25px rgba(0, 229, 255, 0.5);
+      letter-spacing: 1px;
+      border-right: 3px solid #00e5ff;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0;
+      animation: typing 1.8s steps(40, end) forwards, flicker 2s infinite alternate;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes flicker {
+      0% { opacity: 0.7; text-shadow: 0 0 10px #00e5ff; }
+      100% { opacity: 1; text-shadow: 0 0 30px #00e5ff; }
+    }
+
+    h2 {
+      color: #00e5ff;
+      margin: 2rem 0 1rem;
+      text-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
+      font-size: 1.4rem;
+    }
+
+    p, ul {
+      margin-bottom: 1rem;
+    }
+
+    ul {
+      padding-left: 1.25rem;
+    }
+
+    ul li {
+      margin-bottom: 0.5rem;
+      transition: transform 0.3s ease;
+    }
+
+    ul li:hover {
+      transform: translateX(5px);
+      color: #00e5ff;
+    }
+
+    .footer-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 2.5rem 0 0;
+    }
+
+    .footer-buttons a {
+      color: #00e5ff;
+      text-decoration: none;
+      padding: 0.6rem 1.4rem;
+      border: 1px solid #00e5ff;
+      border-radius: 8px;
+      font-weight: 500;
+      font-family: 'Poppins', sans-serif;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 14px rgba(0, 229, 255, 0.3);
+    }
+
+    .footer-buttons a:hover {
+      background-color: rgba(0, 229, 255, 0.15);
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.6);
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <h1>WELCOME TO DBMS SITE</h1>
+
+    <h2>What is DBMS?</h2>
+    <p>A Database Management System (DBMS) is a software tool that allows users to define, manage, retrieve, and manipulate data efficiently. It acts as an interface between users and databases, ensuring data is consistently organized and accessible. DBMS supports operations such as data insertion, updates, deletion, and retrieval using structured query languages.</p>
+
+    <h2>History of DBMS</h2>
+    <p>The evolution of DBMS began in the 1960s with hierarchical and network database models. In 1970, Edgar F. Codd proposed the relational model, which became the foundation for modern relational database systems (RDBMS) such as Oracle and MySQL. More recently, NoSQL databases have emerged to address the need for handling large volumes of unstructured data.</p>
+
+    <h2>Usage and Applications</h2>
+    <p>DBMS is widely used in various domains, including:</p>
+    <ul>
+      <li><strong>Banking:</strong> Account management and transaction processing</li>
+      <li><strong>Education:</strong> Managing student records and course details</li>
+      <li><strong>Healthcare:</strong> Patient data and medical history management</li>
+      <li><strong>Retail:</strong> Inventory tracking and sales analysis</li>
+      <li><strong>Airlines:</strong> Reservation systems and flight scheduling</li>
+    </ul>
+
+    <h2>Key Features of DBMS</h2>
+    <ul>
+      <li><strong>Data Security:</strong> Access control and authorization mechanisms</li>
+      <li><strong>Data Integrity:</strong> Maintaining accurate and consistent data</li>
+      <li><strong>Data Abstraction:</strong> Hiding storage complexity from users</li>
+      <li><strong>Data Independence:</strong> Insulation of data from application changes</li>
+      <li><strong>Concurrency Control:</strong> Managing simultaneous data access</li>
+      <li><strong>Backup and Recovery:</strong> Ensuring data restoration after failures</li>
+      <li><strong>Query Optimization:</strong> Improving query performance and efficiency</li>
+    </ul>
+
+    <div class="footer-buttons">
+      <a href="Course.html">Start Learning</a>
+      <a href="index.html">Back to Home</a>
+    </div>
+  </div>
+</body>
+</html>

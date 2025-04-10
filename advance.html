@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DBMS Guide - Advanced</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #06172b;
+      color: #c9d1d9;
+      min-height: 100vh;
+      padding: 5rem 2rem 4rem;
+    }
+
+    header {
+      background-color: #06172b;
+      padding: 1rem 2rem;
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.15);
+      text-align: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #00e5ff;
+      text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+    }
+
+    .main-container {
+      max-width: 1000px;
+      margin: 9rem auto 0;
+      margin-top: 2rem;
+      background-color: rgba(10, 15, 20, 0.96);
+      padding: 3rem;
+      border-radius: 30px;
+      box-shadow: 0 0 35px rgba(0, 229, 255, 0.3);
+      border: 1.5px solid rgba(0, 229, 255, 0.25);
+      animation: pulse-glow 3s infinite alternate;
+    }
+
+    @keyframes pulse-glow {
+      from {
+        box-shadow: 0 0 30px rgba(0, 229, 255, 0.25);
+        border-color: rgba(0, 229, 255, 0.20);
+      }
+      to {
+        box-shadow: 0 0 45px rgba(0, 229, 255, 0.4);
+        border-color: rgba(0, 229, 255, 0.35);
+      }
+    }
+
+    h1, h2, h3 {
+      color: #00e5ff;
+      margin-bottom: 1rem;
+    }
+    h3 {
+  margin-bottom: 1rem; /* Adjust the value as needed */
+}
+    h1 {
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: #00e5ff;
+      text-shadow: 0 0 15px rgba(0, 255, 255, 1);
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    h2 {
+      margin-top: 2.5rem;
+    }
+
+    pre {
+      background-color: #0f1117;
+      color: #9deef4;
+      padding: 1.5rem;
+      border-radius: 12px;
+      overflow-x: auto;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid #00e5ff;
+      font-size: 1rem;
+      line-height: 1.6;
+      box-shadow: 0 0 25px rgba(0, 229, 255, 0.25);
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      line-height: 1.8;
+    }
+    .module {
+      margin-bottom: 3rem;
+      padding: 2.5rem;
+      background-color: #0a0f14;
+      border-radius: 14px;
+      box-shadow: 0 0 40px rgba(0, 229, 255, 0.15);
+      position: relative;
+    }
+
+    .module::before {
+      content: "";
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      border-radius: 18px;
+      box-shadow: 0 0 40px rgba(0, 229, 255, 0.2);
+      z-index: -1;
+    }
+
+    .module h2 {
+      border-left: 5px solid #00e5ff;
+      padding-left: 1rem;
+    }
+
+    .footer-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 4rem 0 2rem;
+    }
+
+    .footer-buttons a {
+      color: #00e5ff;
+      text-decoration: none;
+      padding: 0.75rem 1.5rem;
+      border: 2px solid #00e5ff;
+      border-radius: 10px;
+      font-weight: 600;
+      transition: 0.3s ease;
+    }
+
+    .footer-buttons a:hover {
+      background-color: rgba(0, 255, 255, 0.1);
+      box-shadow: 0 0 12px rgba(0, 229, 255, 0.4);
+    }
+
+    .scroll-button {
+      position: fixed;
+      bottom: 20px;
+      right: 30px;
+      background: #00e5ff;
+      color: #000;
+      padding: 0.8rem 1.4rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1rem;
+      box-shadow: 0 0 18px rgba(0, 229, 255, 0.8);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 999;
+      border: none;
+      display: none;
+    }
+
+    .scroll-button:hover {
+      background: #00b3cc;
+      box-shadow: 0 0 25px rgba(0, 229, 255, 1);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">Geek DBMS Guide</div>
+  </header>
+  <button id="scrollToEnd" class="scroll-button">To the End ↓</button>
+  <button id="scrollToTop" class="scroll-button">Back to Top ↑</button>
+
+  <script>
+    const scrollToEndBtn = document.getElementById('scrollToEnd');
+    const scrollToTopBtn = document.getElementById('scrollToTop');
+
+    scrollToEndBtn.onclick = () => {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    };
+
+    scrollToTopBtn.onclick = () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const handleScroll = () => {
+      const scrolled = window.scrollY;
+      const maxScroll = document.body.scrollHeight - window.innerHeight;
+
+      if (scrolled >= maxScroll - 50) {
+        scrollToEndBtn.style.display = 'none';
+        scrollToTopBtn.style.display = 'block';
+      } else {
+        scrollToEndBtn.style.display = 'block';
+        scrollToTopBtn.style.display = 'none';
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial state
+  </script>
+</body>
+</html>
+
+
+
+
+
+<div class="main-container">
+  <header>
+    <div class="logo">DBMS - Advanced Queries</div>
+  </header>
+
+  <div class="content">
+    <h1>Advanced DBMS Theory & Concepts</h1>
+
+    <div class="module">
+      <h2>1. Constraints in DBMS</h2>
+      <p>Constraints are rules enforced on data in tables. They ensure accuracy and reliability.</p>
+      <ul>
+        <li><strong>NOT NULL</strong> - Ensures a column cannot have a NULL value</li>
+        <li><strong>UNIQUE</strong> - Ensures all values in a column are different</li>
+        <li><strong>PRIMARY KEY</strong> - Combines NOT NULL and UNIQUE. Uniquely identifies each row</li>
+        <li><strong>FOREIGN KEY</strong> - Ensures referential integrity between two tables</li>
+        <li><strong>CHECK</strong> - Ensures the value in columns meet a specific condition</li>
+      </ul>
+      <pre>CREATE TABLE employees (
+  emp_id INT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  age INT CHECK (age >= 18),
+  department_id INT,
+  FOREIGN KEY (department_id) REFERENCES departments(dept_id)
+);</pre>
+    </div>
+
+    <div class="module">
+      <h2>2. Joins</h2>
+      <p>Joins are used to combine rows from two or more tables, based on a related column.</p>
+      <pre>-- INNER JOIN
+SELECT s.name, d.department_name
+FROM students s
+INNER JOIN departments d ON s.department_id = d.dept_id;
+
+-- LEFT JOIN
+SELECT s.name, d.department_name
+FROM students s
+LEFT JOIN departments d ON s.department_id = d.dept_id;</pre>
+    </div>
+
+    <div class="module">
+      <h2>3. Subqueries</h2>
+      <p>Subqueries are queries nested inside another query. They help perform complex filtering.</p>
+      <pre>SELECT name FROM students
+WHERE age > (SELECT AVG(age) FROM students);</pre>
+    </div>
+
+    <div class="module">
+      <h2>4. Views</h2>
+      <p>A view is a virtual table based on the result-set of a query.</p>
+      <pre>CREATE VIEW cs_students AS
+SELECT name FROM students WHERE department = 'Computer Science';</pre>
+    </div>
+
+    <div class="module">
+      <h2>5. Normalization</h2>
+      <p>Normalization is the process of organizing data to reduce redundancy.</p>
+      <ul>
+        <li><strong>1NF:</strong> Eliminate repeating groups</li>
+        <li><strong>2NF:</strong> Remove partial dependency</li>
+        <li><strong>3NF:</strong> Remove transitive dependency</li>
+        <li><strong>BCNF:</strong> Advanced version of 3NF</li>
+      </ul>
+    </div>
+
+    <div class="module">
+      <h2>6. Transactions & ACID Properties</h2>
+      <p>A transaction is a unit of work performed on the database. ACID ensures reliability:</p>
+      <ul>
+        <li><strong>Atomicity</strong> - All or nothing</li>
+        <li><strong>Consistency</strong> - Brings database from one valid state to another</li>
+        <li><strong>Isolation</strong> - Concurrent transactions don't affect each other</li>
+        <li><strong>Durability</strong> - Changes persist even after a crash</li>
+      </ul>
+      <pre>BEGIN;
+UPDATE accounts SET balance = balance - 500 WHERE id = 1;
+UPDATE accounts SET balance = balance + 500 WHERE id = 2;
+COMMIT;</pre>
+    </div>
+
+    <div class="module">
+      <h2>7. Triggers</h2>
+      <p>Triggers are special procedures that execute automatically when an event occurs.</p>
+      <pre>CREATE TRIGGER log_insert
+AFTER INSERT ON students
+FOR EACH ROW
+BEGIN
+  INSERT INTO logs(action) VALUES('New student added');
+END;</pre></div>  
+
+<div class="module">
+  <h2>8. Indexing</h2>
+  <p>Indexes speed up retrieval of records by creating pointers to the data.</p>
+  <pre>CREATE INDEX idx_name ON students(name);</pre>
+</div>
+
+<div class="module">
+  <h2>9. Stored Procedures</h2>
+  <p>Stored procedures are reusable SQL blocks that encapsulate logic.</p>
+  <pre>CREATE PROCEDURE AddStudent (IN s_name VARCHAR(50))
+BEGIN
+INSERT INTO students(name) VALUES(s_name);
+END;</pre>
+</div>
+
+<div class="module">
+  <h2>10. Cursor Management</h2>
+  <p>Cursors allow row-by-row processing of results.</p>
+  <pre>DECLARE cur CURSOR FOR SELECT name FROM students;
+OPEN cur;
+FETCH cur INTO @name;
+CLOSE cur;</pre>
+</div>
+
+<div class="module">
+  <h2>11. Exception Handling</h2>
+  <p>PL/SQL lets you handle errors using exceptions.</p>
+  <pre>BEGIN
+-- risky operation
+EXCEPTION
+WHEN OTHERS THEN
+DBMS_OUTPUT.PUT_LINE('Error occurred');
+END;</pre>
+</div>
+
+<div class="module">
+  <h2>12. Nested Queries</h2>
+  <p>Subqueries help fetch data conditionally using results of other queries.</p>
+  <pre>SELECT name FROM students
+WHERE id IN (SELECT student_id FROM enrollments WHERE course_id = 3);</pre>
+</div>
+
+<div class="module">
+  <h2>13. Set Operators</h2>
+  <p>Combine results from multiple SELECT queries.</p>
+  <pre>SELECT name FROM cs_students
+UNION
+SELECT name FROM math_students;</pre>
+</div>
+
+<div class="module">
+  <h2>14. PL/SQL Fundamentals</h2>
+  <p>PL/SQL is Oracle’s procedural extension for SQL.</p>
+  <pre>DECLARE
+v_id INT := 1;
+BEGIN
+DBMS_OUTPUT.PUT_LINE(v_id);
+END;</pre>
+</div>
+
+<div class="module">
+  <h2>15. Views</h2>
+  <p>A view is a virtual table based on a query result.</p>
+  <pre>CREATE VIEW student_names AS
+SELECT name FROM students;</pre>
+</div>
+
+<div class="module">
+  <h2>16. Data Control Language (DCL)</h2>
+  <p>Used to control access to data.</p>
+  <pre>GRANT SELECT ON students TO user1;
+REVOKE SELECT ON students FROM user1;</pre>
+</div>
+
+<div class="module">
+  <h2>17. Transaction Control</h2>
+  <p>Used to manage changes made by DML statements.</p>
+  <pre>BEGIN;
+UPDATE students SET name = 'Ram' WHERE id = 1;
+COMMIT;</pre>
+</div>
+
+<div class="module">
+  <h2>18. Triggers</h2>
+  <p>Procedures that automatically execute on specific events in a table.</p>
+  <pre>CREATE TRIGGER trg_before_insert
+BEFORE INSERT ON students
+FOR EACH ROW
+BEGIN
+SET NEW.created_at = NOW();
+END;</pre>
+</div>
+
+<div class="module">
+  <h2>19. Data Independence</h2>
+  <p>Refers to the capacity to change the schema at one level without altering schema at the next level.</p>
+  <p>Types: Logical and Physical Data Independence.</p>
+</div>
+
+<div class="module">
+  <h2>20. Database Languages</h2>
+  <p>Includes DDL, DML, DCL, TCL.</p>
+  <ul>
+    <li>DDL - Data Definition Language (CREATE, ALTER, DROP)</li>
+    <li>DML - Data Manipulation Language (SELECT, INSERT, UPDATE, DELETE)</li>
+    <li>DCL - Data Control Language (GRANT, REVOKE)</li>
+    <li>TCL - Transaction Control Language (COMMIT, ROLLBACK, SAVEPOINT)</li>
+  </ul>
+</div>
+<div class="module">
+  <h2>21. File System vs DBMS</h2>
+  <p>Before DBMS, data was stored using traditional file systems. While both are used for storing data, DBMS is far more powerful and structured.</p>
+
+  <table style="width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.95rem;">
+    <thead>
+      <tr style="background-color: #0f1a20; color: #00e5ff;">
+        <th style="padding: 0.75rem; border: 1px solid #1e2b35;">Aspect</th>
+        <th style="padding: 0.75rem; border: 1px solid #1e2b35;">File System</th>
+        <th style="padding: 0.75rem; border: 1px solid #1e2b35;">DBMS</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding: 0.75rem; border: 1px solid #1e2b35;">Data Storage</td>
+        <td style="padding: 0.75rem; border: 1px solid #1e2b35;">Stores data in files using formats like .txt or .csv</td>
+        <td style="padding: 0.75rem; border: 1px solid #1e2b35;">Stores data in structured tables using databases</td>
+      </tr>
+      <tr>
+        <td style="padding: 0.75rem; border: 1px solid #1e2b35;">Data Redundancy</td>
+        <td style="padding: 0.75rem; border: 1px solid #1e2b35;">High – Same data may be stored in multiple files</td>
+        <td style="padding: 0.75rem; border: 1px solid #1e2b35;">Low – Redundancy is minimized using normalization</td>
+      </tr>
+      <tr>
+        <td style="padding: 0.75rem; border: 1px solid #1e2b35;">Data Integrity</td>
+        <td style="padding: 0.75rem; border: 1px solid #1e2b35;">Difficult to maintain</td>
+        <td style="padding: 0.75rem; border: 1px solid #1e2b35;">Ensures accuracy and consistency using constraints</td>
+      </tr>
+      <tr>
+        <td style="padding: 0.75rem; border: 1px solid #1e2b35;">Security</td>
+        <td style="padding: 0.75rem; border: 1px solid #1e2b35;">Low – Anyone with file access can read/modify it</td>
+        <td style="padding: 0.75rem; border: 1px solid #1e2b35;">High – Access control, authentication and roles</td>
+      </tr>
+      <tr>
+        <td style="padding: 0.75rem; border: 1px solid #1e2b35;">Concurrency</td>
+        <td style="padding: 0.75rem; border: 1px solid #1e2b35;">No proper handling</td>
+        <td style="padding: 0.75rem; border: 1px solid #1e2b35;">Supports multiple users with ACID properties</td>
+      </tr>
+      <tr>
+        <td style="padding: 0.75rem; border: 1px solid #1e2b35;">Query Capability</td>
+        <td style="padding: 0.75rem; border: 1px solid #1e2b35;">Manual searching or scripting</td>
+        <td style="padding: 0.75rem; border: 1px solid #1e2b35;">Powerful SQL queries for fast searching</td>
+      </tr>
+      <tr>
+        <td style="padding: 0.75rem; border: 1px solid #1e2b35;">Backup & Recovery</td>
+        <td style="padding: 0.75rem; border: 1px solid #1e2b35;">Manual and error-prone</td>
+        <td style="padding: 0.75rem; border: 1px solid #1e2b35;">Automatic and robust</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p style="margin-top: 1rem;"><strong>Conclusion:</strong> DBMS is the modern approach to handle large, secure, and structured data while traditional file systems are basic and limited in power.</p>
+</div>
+
+
+<div class="module">
+  <h2>22. Characteristics of Database Approach</h2>
+  <ul>
+    <li>Self-describing nature</li>
+    <li>Data abstraction and independence</li>
+    <li>Support for multiple views</li>
+    <li>Transaction support</li>
+    <li>Controlled access</li>
+  </ul>
+</div>
+
+<div class="module">
+  <h2>23. Abstraction and Data Integration</h2>
+  <p>Abstraction hides complexity; DBMS uses three levels of abstraction: physical, logical, and view level.</p>
+  <p>Data integration allows users to get unified access to multiple sources of data.</p>
+</div>
+
+<div class="module">
+  <h2>24. DBMS Users</h2>
+  <ul>
+    <li><strong>DBA (Database Administrator):</strong> Manages the database.</li>
+    <li><strong>Database Designers:</strong> Design structure and schema.</li>
+    <li><strong>Application Programmers:</strong> Develop programs to interact with DB.</li>
+    <li><strong>End Users:</strong> Use database through applications.</li>
+  </ul>
+</div>
+
+<div class="module">
+  <h2>25. Advantages and Disadvantages of DBMS</h2>
+  
+  <h3>✅ Advantages of DBMS</h3>
+  <ul>
+    <li><strong>1. Data Redundancy is Reduced:</strong> Eliminates unnecessary duplication of data across multiple locations.</li>
+    <li><strong>2. Data Integrity:</strong> Ensures accuracy and consistency using constraints and keys.</li>
+    <li><strong>3. Data Security:</strong> Provides role-based access and authentication for users.</li>
+    <li><strong>4. Data Backup and Recovery:</strong> Easy and automatic backup helps recover from failures quickly.</li>
+    <li><strong>5. Concurrency Control:</strong> Supports simultaneous access to data by multiple users safely.</li>
+    <li><strong>6. Data Abstraction:</strong> Users interact with logical data without worrying about its internal structure.</li>
+    <li><strong>7. Query Language:</strong> SQL makes data manipulation easy and efficient.</li>
+    <li><strong>8. Improved Data Sharing:</strong> Centralized system allows authorized users to access data from anywhere.</li>
+  </ul>
+
+  <h3 style="margin-top: 2rem;">❌ Disadvantages of DBMS</h3>
+  <ul>
+    <li><strong>1. Cost of Hardware and Software:</strong> High initial investment for DBMS software and hardware setup.</li>
+    <li><strong>2. Complexity:</strong> Requires skilled professionals to manage and maintain.</li>
+    <li><strong>3. Performance Issues:</strong> For small applications, DBMS might be slower due to overhead.</li>
+    <li><strong>4. Size:</strong> Requires large storage due to complexity and features.</li>
+    <li><strong>5. Frequent Updates:</strong> Needs regular upgrades and patches to stay secure and efficient.</li>
+    <li><strong>6. Risk of Data Loss:</strong> If the central database fails without backup, entire data could be lost.</li>
+  </ul>
+</div>
+
+
+<div class="module">
+  <h2>26. Implication of Database Approach</h2>
+  <p>Adopting DBMS changes how data is stored, accessed, and secured. It centralizes control, enables automation, and impacts system performance, staffing, and budgets.</p>
+</div>
+
+<div class="module">
+  <h2>27. Levels of Data Abstraction</h2>
+  <p>DBMS provides an abstract view of data through <strong>three levels of abstraction</strong>. These help in hiding complexities and provide different views for different users.</p>
+
+  <h3>1️⃣ External Level (View Level)</h3>
+  <ul>
+    <li>This is the <strong>highest level</strong> of abstraction.</li>
+    <li>Represents the way individual users interact with the system.</li>
+    <li>Each user sees only the relevant data and hides the rest.</li>
+    <li>Example: A bank teller only sees the customer name and balance, not internal IDs or access logs.</li>
+  </ul>
+
+  <h3>2️⃣ Conceptual Level (Logical Level)</h3>
+  <ul>
+    <li>Describes what data is stored in the database and the relationships among the data.</li>
+    <li>This is the level seen by the DBA or database designer.</li>
+    <li>Defines the entire database structure like tables, views, constraints, and schemas.</li>
+    <li><strong>Example:</strong> "Customers" table with fields: ID, Name, Email, Balance, etc.</li>
+  </ul>
+
+  <h3>3️⃣ Internal Level (Physical Level)</h3>
+  <ul>
+    <li>The lowest level of abstraction.</li>
+    <li>Deals with the <strong>actual physical storage</strong> of the data on storage devices (e.g., HDD, SSD).</li>
+    <li>Defines indexes, data compression, partitions, and data placement techniques.</li>
+    <li><strong>Example:</strong> Data is stored in binary format using B-trees for indexing.</li>
+  </ul>
+
+  <h3 style="margin-top: 2rem;">📌 Why Abstraction Matters:</h3>
+  <ul>
+    <li><strong>Simplifies database management</strong> for different user roles.</li>
+    <li>Enables <strong>Data Independence</strong>: Changes in storage structure don’t affect logical structure or user views.</li>
+  </ul>
+</div>
+
+
+<div class="module">
+  <h2>28. Schema and Instances</h2>
+  <p><strong>Schema:</strong> Structure of the database (blueprint).</p>
+  <p><strong>Instance:</strong> The actual data stored in the database at a particular moment.</p>
+</div>
+
+<div class="module">
+  <h2>29. DBMS Functional Components</h2>
+  <ul>
+    <li>Storage Manager</li>
+    <li>Query Processor</li>
+    <li>Transaction Manager</li>
+    <li>DDL Interpreter</li>
+    <li>Catalog Manager</li>
+  </ul>
+</div>
+
+<div class="module">
+  <h2>30. Data Models in DBMS</h2>
+  <p>Data models define how data is logically structured and manipulated in a DBMS. The three primary conventional models are:</p>
+
+  <h3>1️⃣ Hierarchical Model</h3>
+  <p>Organizes data in a tree-like structure with a single root. Each child has only one parent, resembling a file directory system.</p>
+
+  <pre>
+    🔽 Company
+      ├── Department
+      │     ├── Manager
+      │     └── Employee
+      └── HR
+           └── Recruiter
+  </pre>
+
+  <p><strong>Pros:</strong> Simple structure, fast navigation for 1:N relationships.</p>
+  <p><strong>Cons:</strong> Rigid structure, difficult to reorganize.</p>
+
+  <h3>2️⃣ Network Model</h3>
+  <p>Data is organized in records and sets, allowing many-to-many relationships. Each child can have multiple parents.</p>
+
+  <pre>
+    🔁 Student
+       ↕       ↕
+    Course ↔ Instructor
+  </pre>
+
+  <p><strong>Pros:</strong> More flexible than hierarchical model.</p>
+  <p><strong>Cons:</strong> Complex to maintain and navigate.</p>
+
+  <h3>3️⃣ Relational Model</h3>
+  <p>Organizes data into tables (relations) with rows and columns. It's the most widely used model today.</p>
+
+  <pre>
+    📋 Table: STUDENTS
+
+    +--------+----------+--------+
+    | RollNo | Name     | Dept   |
+    +--------+----------+--------+
+    | 101    | Alice    | CSE    |
+    | 102    | Bob      | ECE    |
+    +--------+----------+--------+
+  </pre>
+
+  <p><strong>Pros:</strong> Easy to understand, supports powerful query language (SQL).</p>
+  <p><strong>Cons:</strong> Might require more storage and processing for complex operations.</p>
+
+  <h3>🔍 Summary Table</h3>
+  <table style="width: 100%; margin-top: 1rem; border-collapse: collapse; color: #9deef4;">
+    <tr style="background-color: #0f1117;">
+      <th style="border: 1px solid #00e5ff; padding: 10px;">Model</th>
+      <th style="border: 1px solid #00e5ff; padding: 10px;">Structure</th>
+      <th style="border: 1px solid #00e5ff; padding: 10px;">Relationships</th>
+      <th style="border: 1px solid #00e5ff; padding: 10px;">Usage</th>
+    </tr>
+    <tr>
+      <td style="border: 1px solid #00e5ff; padding: 10px;">Hierarchical</td>
+      <td style="border: 1px solid #00e5ff; padding: 10px;">Tree</td>
+      <td style="border: 1px solid #00e5ff; padding: 10px;">1:N</td>
+      <td style="border: 1px solid #00e5ff; padding: 10px;">Legacy Systems</td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid #00e5ff; padding: 10px;">Network</td>
+      <td style="border: 1px solid #00e5ff; padding: 10px;">Graph</td>
+      <td style="border: 1px solid #00e5ff; padding: 10px;">M:N</td>
+      <td style="border: 1px solid #00e5ff; padding: 10px;">CAD/CAM</td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid #00e5ff; padding: 10px;">Relational</td>
+      <td style="border: 1px solid #00e5ff; padding: 10px;">Table</td>
+      <td style="border: 1px solid #00e5ff; padding: 10px;">Flexible</td>
+      <td style="border: 1px solid #00e5ff; padding: 10px;">Modern DBMS</td>
+    </tr>
+  </table>
+</div>
+
+<div class="module">
+  <h2>31. Entity Types, Sets, Attributes & Keys</h2>
+  <p><strong>Entity Type:</strong> A category of objects (e.g., Student).</p>
+  <p><strong>Entity Set:</strong> Collection of similar entities.</p>
+  <p><strong>Attributes:</strong> Characteristics of entities (e.g., name, age).</p>
+  <p><strong>Keys:</strong> Uniquely identify an entity in a set (Primary Key).</p>
+</div>
+
+<div class="module">
+  <h2>32. Relationships & Structural Constraints</h2>
+  <p><strong>Relationship:</strong> Association among entities (e.g., Enrolled between Student and Course).</p>
+  <P>Cardinality in DBMS</P>
+  <p><strong>Cardinality</strong> refers to the number of relationships between entities in a database. It helps define how rows in one table relate to rows in another.</p>
+
+  <h3>1️⃣ One-to-One (1:1)</h3>
+  <p>Each record in Table A relates to exactly one record in Table B, and vice versa.</p>
+
+  <pre>
+    👤 Person 1 ──── 📄 Aadhaar 1
+    👤 Person 2 ──── 📄 Aadhaar 2
+  </pre>
+
+  <p><strong>Example:</strong> One person has one Aadhaar number.</p>
+
+  <pre>
+    CREATE TABLE Person (
+      person_id INT PRIMARY KEY,
+      name VARCHAR(50)
+    );
+
+    CREATE TABLE Aadhaar (
+      aadhaar_id CHAR(12) PRIMARY KEY,
+      person_id INT UNIQUE,
+      FOREIGN KEY (person_id) REFERENCES Person(person_id)
+    );
+  </pre>
+
+  <h3>2️⃣ One-to-Many (1:N)</h3>
+  <p>Each record in Table A can relate to many records in Table B, but each record in Table B relates to only one in Table A.</p>
+
+  <pre>
+    🧑‍🏫 Teacher ─▶ 👩‍🎓 Student 1  
+                 └▶ 👨‍🎓 Student 2
+  </pre>
+
+  <p><strong>Example:</strong> One teacher teaches many students.</p>
+
+  <pre>
+    CREATE TABLE Teacher (
+      teacher_id INT PRIMARY KEY,
+      name VARCHAR(50)
+    );
+
+    CREATE TABLE Student (
+      student_id INT PRIMARY KEY,
+      name VARCHAR(50),
+      teacher_id INT,
+      FOREIGN KEY (teacher_id) REFERENCES Teacher(teacher_id)
+    );
+  </pre>
+
+  <h3>3️⃣ Many-to-Many (M:N)</h3>
+  <p>Records in Table A can relate to many records in Table B and vice versa. Requires a junction/bridge table.</p>
+
+  <pre>
+    🧑 Student A ─┐  
+                 ├── 📘 Course X  
+    🧑 Student B ─┘    📘 Course Y
+  </pre>
+
+  <p><strong>Example:</strong> Students enroll in many courses; courses have many students.</p>
+
+  <pre>
+    CREATE TABLE Student (
+      student_id INT PRIMARY KEY,
+      name VARCHAR(50)
+    );
+
+    CREATE TABLE Course (
+      course_id INT PRIMARY KEY,
+      title VARCHAR(50)
+    );
+
+    CREATE TABLE Enrollments (
+      student_id INT,
+      course_id INT,
+      PRIMARY KEY (student_id, course_id),
+      FOREIGN KEY (student_id) REFERENCES Student(student_id),
+      FOREIGN KEY (course_id) REFERENCES Course(course_id)
+    );
+  </pre>
+
+  <p>🔍 These cardinalities are crucial for designing proper Entity-Relationship diagrams and structuring relational databases.</p>
+  <p><strong>Participation Constraints:</strong> Total or partial participation in a relationship.</p>
+</div>
+
+<div class="module">
+  <h2>33. Weak Entity Types</h2>
+  <p>Entities that do not have a primary key and rely on a "strong" entity type.</p>
+  <p><strong>Example:</strong> "Dependent" depends on "Employee".</p>
+</div>
+
+<div class="module">
+  <h2>34 . Entity-Relationship (ER) Diagram Design</h2>
+
+  <p>An <strong>ER Diagram</strong> visually represents the entities, their attributes, and relationships in a database. It helps in database planning before implementation.</p>
+
+  <h3>🧩 Components of ER Diagram</h3>
+  <ul>
+    <li><strong>Entity:</strong> A real-world object (e.g., Student, Course)</li>
+    <li><strong>Attribute:</strong> Property of an entity (e.g., student_name)</li>
+    <li><strong>Key Attribute:</strong> Uniquely identifies an entity</li>
+    <li><strong>Relationship:</strong> Association among entities</li>
+    <li><strong>Cardinality:</strong> 1:1, 1:N, M:N relationships</li>
+    <li><strong>Weak Entity:</strong> Depends on another entity (e.g., Dependents)</li>
+  </ul>
+
+  <h3>📘 Example ER Design</h3>
+  <p>Entities: Student, Course<br> Relationship: Enrolled</p>
+
+  <pre>
+    STUDENT (student_id, name, age)
+    COURSE (course_id, course_name)
+    ENROLLED (student_id, course_id, enrollment_date)
+  </pre>
+
+  <p>🧠 <strong>Cardinality:</strong> Many-to-Many (M:N) between STUDENT and COURSE</p>
+
+  <h2>ER to Relational Schema Conversion</h2>
+
+  <p>To implement an ER model in SQL, convert it into relational tables (schema reduction).</p>
+
+  <h3>Steps to Convert:</h3>
+  <ol>
+    <li>Each strong entity becomes a table.</li>
+    <li>Attributes become columns. Key attributes become <code>PRIMARY KEY</code>.</li>
+    <li>Each relationship becomes a new table if M:N, or adds foreign key if 1:N or 1:1.</li>
+    <li>Weak entities also become tables and include foreign key from owner entity.</li>
+  </ol>
+
+  <h3>💾 SQL Example After Schema Reduction:</h3>
+
+  <pre>
+  -- Strong entities
+  CREATE TABLE Student (
+    student_id INT PRIMARY KEY,
+    name VARCHAR(50),
+    age INT
+  );
+
+  CREATE TABLE Course (
+    course_id INT PRIMARY KEY,
+    course_name VARCHAR(50)
+  );
+
+  -- M:N relationship becomes a table
+  CREATE TABLE Enrolled (
+    student_id INT,
+    course_id INT,
+    enrollment_date DATE,
+    PRIMARY KEY (student_id, course_id),
+    FOREIGN KEY (student_id) REFERENCES Student(student_id),
+    FOREIGN KEY (course_id) REFERENCES Course(course_id)
+  );
+  </pre>
+
+  <h3>🧱 Example with Weak Entity</h3>
+  <p>Dependent depends on Student (weak entity)</p>
+
+  <pre>
+  CREATE TABLE Dependent (
+    dep_id INT,
+    student_id INT,
+    dep_name VARCHAR(50),
+    relationship VARCHAR(20),
+    PRIMARY KEY (dep_id, student_id),
+    FOREIGN KEY (student_id) REFERENCES Student(student_id)
+  );
+  </pre>
+
+  <p>✅ This process ensures that the logical ER design is properly translated into physical SQL schema.</p>
+</div>
+
+
+<div class="module">
+  <h2>35. Relational Algebra - Basic Operations</h2>
+  <p>Mathematical foundation of relational databases.</p>
+  <ul>
+    <li><strong>Select (σ):</strong> Filters rows</li>
+    <li><strong>Project (π):</strong> Filters columns</li>
+    <li><strong>Union (∪), Set Difference (-), Cartesian Product (×), Rename (ρ)</strong></li>
+    <li><strong>Join:</strong> Combines two relations based on a condition</li>
+  </ul>
+</div>
+
+<div class="module">
+  <h2>36. Functional Dependencies & Normalization</h2>
+  <p><strong>Functional Dependency:</strong> If A → B, knowing A gives B.</p>
+  <p><strong>Normalization:</strong> Process to remove redundancy and anomalies.</p>
+  <p><strong>1NF, 2NF, 3NF, BCNF:</strong> Different levels of normalization based on dependencies.</p>
+</div>
+
+<div class="module">
+  <h2>37. Decomposition & Its Properties</h2>
+  <p>Breaking a relation into two or more to achieve normalization.</p>
+  <p><strong>Properties:</strong> Lossless join, Dependency preservation.</p>
+</div>
+<div class="module">
+  <h2>38. Codd’s 12 Rules for RDBMS (Explained)</h2>
+  <p>E.F. Codd proposed 12 rules that define what a true Relational Database Management System (RDBMS) should follow:</p>
+
+  <ol>
+    <li>
+      <strong>Rule 1 - Information Rule:</strong><br>
+      All data should be stored in table format (values in rows and columns), including metadata.
+    </li>
+    <li>
+      <strong>Rule 2 - Guaranteed Access Rule:</strong><br>
+      Every data element (atomic value) must be accessible using a combination of table name, primary key (row), and column name.
+    </li>
+    <li>
+      <strong>Rule 3 - Systematic Treatment of Null Values:</strong><br>
+      Nulls must be supported for missing or inapplicable information. They must be handled uniformly.
+    </li>
+    <li>
+      <strong>Rule 4 - Dynamic Online Catalog:</strong><br>
+      Metadata (like table definitions, constraints) must also be stored in the database as regular tables and queried using SQL.
+    </li>
+    <li>
+      <strong>Rule 5 - Comprehensive Data Sub-Language Rule:</strong><br>
+      There must be one language (like SQL) for defining data, manipulating data, and accessing metadata.
+    </li>
+    <li>
+      <strong>Rule 6 - View Updating Rule:</strong><br>
+      All views that are theoretically updatable must be updatable via the system.
+    </li>
+    <li>
+      <strong>Rule 7 - High-Level Insert, Update, and Delete:</strong><br>
+      The system must support set-level operations (not just row-by-row).
+    </li>
+    <li>
+      <strong>Rule 8 - Physical Data Independence:</strong><br>
+      Changes to physical storage (hardware, location) must not affect how the data is accessed.
+    </li>
+    <li>
+      <strong>Rule 9 - Logical Data Independence:</strong><br>
+      Changes to logical structure (tables, columns) must not affect the application programs using them.
+    </li>
+    <li>
+      <strong>Rule 10 - Integrity Independence:</strong><br>
+      Integrity constraints (e.g., primary key, foreign key) must be stored in the catalog and enforced by the DBMS, not in the application code.
+    </li>
+    <li>
+      <strong>Rule 11 - Distribution Independence:</strong><br>
+      The user should not be aware whether the database is distributed (on multiple machines or locations).
+    </li>
+    <li>
+      <strong>Rule 12 - Non-Subversion Rule:</strong><br>
+      If the system provides low-level access (like file access), it must not be able to bypass security and integrity rules.
+    </li>
+  </ol>
+
+  <p><strong>Note:</strong> No commercial RDBMS follows all 12 rules 100%, but most aim to follow as many as possible.</p>
+</div>
+
+
+<div class="module">
+  <h2>39. PL/SQL Architecture & Structure</h2>
+  <p><strong>Architecture:</strong> PL/SQL Engine executes blocks.</p>
+  <p><strong>Structure:</strong> Block-based with Declare, Begin, Exception, End sections.</p>
+</div>
+
+<div class="module">
+  <h2>40. PL/SQL Cursors</h2>
+  <p><strong>Cursor:</strong> Pointer to result set of a query.</p>
+  <p>Types: Implicit and Explicit</p>
+  <p><strong>Attributes:</strong> %FOUND, %NOTFOUND, %ROWCOUNT</p>
+</div>
+
+<div class="module">
+  <h2>41. PL/SQL Exception Handling</h2>
+  <p><strong>Predefined:</strong> Built-in exceptions like NO_DATA_FOUND</p>
+  <p><strong>User Defined:</strong> Custom exception blocks using `RAISE` keyword</p>
+</div>
+
+<div class="footer-buttons">
+  <a href="Course.html">← Back to Examples</a>
+  <a href="index.html">← Back to Home</a>
+</div>
+</div>
+</body>
+</html>
+</div>

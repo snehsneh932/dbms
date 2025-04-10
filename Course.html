@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DBMS Guide - Examples</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #06172b;
+      color: #c9d1d9;
+      min-height: 100vh;
+      padding: 5rem 2rem 4rem;
+    }
+
+    header {
+      width: 100%;
+      background-color: #06172b;
+      padding: 1rem 2rem;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.15);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #00e5ff;
+      text-shadow: 0 0 12px rgba(0, 255, 255, 0.8);
+    }
+
+    .main-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      margin-top: 2rem;
+      background: rgba(10, 15, 20, 0.96);
+      padding: 3rem;
+      border-radius: 30px;
+      box-shadow: 0 0 35px rgba(0, 229, 255, 0.3);
+      border: 1.5px solid rgba(0, 229, 255, 0.25);
+      animation: pulse-glow 3s infinite alternate;
+    }
+
+    @keyframes pulse-glow {
+      from {
+        box-shadow: 0 0 30px rgba(0, 229, 255, 0.25);
+        border-color: rgba(0, 229, 255, 0.20);
+      }
+      to {
+        box-shadow: 0 0 45px rgba(0, 229, 255, 0.4);
+        border-color: rgba(0, 229, 255, 0.35);
+      }
+    }
+
+    h1 {
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: #00e5ff;
+      text-shadow: 0 0 15px rgba(0, 255, 255, 1);
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .module {
+      margin-bottom: 2rem;
+    }
+
+    .module h2 {
+      font-size: 1.3rem;
+      color: #00e5ff;
+      margin-bottom: 0.8rem;
+      border-left: 4px solid #00e5ff;
+      padding-left: 1rem;
+      text-shadow: 0 0 5px rgba(0, 229, 255, 0.5);
+    }
+
+    .module p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #e0f7ff;
+      margin-bottom: 1rem;
+      padding-left: calc(1rem + 4px);
+    }
+
+    pre {
+      background-color: #0f1117;
+      padding: 1rem 1.2rem;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      border-left: 3px solid #00e5ff;
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+      color: #c3f4ff;
+      margin-bottom: 1.5rem;
+    }
+
+    .scroll-button {
+      position: fixed;
+      bottom: 20px;
+      right: 30px;
+      background: #00e5ff;
+      color: #000;
+      padding: 0.8rem 1.4rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1rem;
+      box-shadow: 0 0 18px rgba(0, 229, 255, 0.8);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 999;
+      border: none;
+    }
+
+    .scroll-button:hover {
+      background: #00b3cc;
+      box-shadow: 0 0 25px rgba(0, 229, 255, 1);
+    }
+
+    .footer-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1.2rem;
+      margin-top: 3rem;
+    }
+
+    .footer-buttons a {
+      text-decoration: none;
+      color: #00e5ff;
+      border: 2px solid #00e5ff;
+      padding: 0.6rem 1.4rem;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
+
+    .footer-buttons a:hover {
+      background: rgba(0, 229, 255, 0.15);
+      box-shadow: 0 0 18px rgba(0, 229, 255, 0.5);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">DBMS</div>
+  </header>
+
+  <button id="scrollToEnd" class="scroll-button" onclick="scrollToEnd()">To the End ↓</button>
+  <button id="scrollToTop" class="scroll-button" onclick="scrollToTop()" style="display: none;">Back to Top ↑</button>
+
+  <script>
+    const scrollToEndBtn = document.getElementById("scrollToEnd");
+    const scrollToTopBtn = document.getElementById("scrollToTop");
+
+    function scrollToEnd() {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    }
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    window.addEventListener("scroll", () => {
+      const scrollPosition = window.innerHeight + window.scrollY;
+      const nearBottom = document.body.offsetHeight - 50;
+
+      if (scrollPosition >= nearBottom) {
+        scrollToEndBtn.style.display = "none";
+        scrollToTopBtn.style.display = "block";
+      } else {
+        scrollToEndBtn.style.display = "block";
+        scrollToTopBtn.style.display = "none";
+      }
+    });
+  </script>
+
+</body>
+</html>
+
+
+
+
+
+<div class="main-container">
+  <div class="content">
+    <h1>DBMS Queries</h1>
+
+    <div class="module">
+      <h2>1. What is a Table?</h2>
+      <p>A table in a DBMS is a collection of related data entries that consists of rows and columns. It stores information in structured format.</p>
+    </div>
+
+    <div class="module">
+      <h2>2. Use of Table</h2>
+      <p>Tables help store, organize, and manipulate data efficiently using SQL commands.</p>
+    </div>
+
+    <div class="module">
+      <h2>3. How to Create a Table</h2>
+      <p>We use the <code>CREATE TABLE</code> command to define a table schema.</p>
+      <pre>CREATE TABLE students (
+  student_id INT PRIMARY KEY,
+  name VARCHAR(100),
+  age INT,
+  department VARCHAR(50)
+);</pre>
+    </div>
+
+    <div class="module">
+      <h2>4. Inserting Data into a Table</h2>
+      <p>Use the <code>INSERT INTO</code> command to add data into a table.</p>
+      <pre>INSERT INTO students (student_id, name, age, department)
+VALUES (1, 'Aarav Singh', 21, 'Computer Science');</pre>
+    </div>
+
+    <div class="module">
+      <h2>5. Selecting Data from a Table</h2>
+      <p>Use the <code>SELECT</code> command to retrieve data from a table.</p>
+      <pre>SELECT * FROM students;
+
+SELECT name, department FROM students WHERE age > 20;</pre>
+    </div>
+
+    <div class="module">
+      <h2>6. Updating Data in a Table</h2>
+      <p>Use the <code>UPDATE</code> command to modify existing data.</p>
+      <pre>UPDATE students SET age = 22 WHERE student_id = 1;</pre>
+    </div>
+
+    <div class="module">
+      <h2>7. Deleting Rows from a Table</h2>
+      <p>Use the <code>DELETE</code> command to remove records from a table.</p>
+      <pre>DELETE FROM students WHERE student_id = 1;</pre>
+    </div>
+
+    <div class="module">
+      <h2>8. Altering a Table</h2>
+      <p>Use the <code>ALTER TABLE</code> command to modify the structure of a table.</p>
+      <pre>-- Add a new column
+ALTER TABLE students ADD email VARCHAR(100);
+
+-- Drop a column
+ALTER TABLE students DROP COLUMN age;
+
+-- Rename a column (MySQL syntax)
+ALTER TABLE students RENAME COLUMN name TO full_name;</pre>
+    </div>
+    <div class="module">
+        <h2>9. Important SQL Clauses (Explained)</h2>
+        <p>SQL clauses are keywords used in SQL queries to define conditions, filters, groupings, and other behavior. Here are the most commonly used SQL clauses:</p>
+      
+        <ul>
+          <li>
+            <strong>1. SELECT:</strong> Retrieves data from one or more tables.<br>
+            <pre>SELECT name, age FROM students;</pre>
+          </li>
+      
+          <li>
+            <strong>2. FROM:</strong> Specifies the table to retrieve data from.<br>
+            <pre>SELECT * FROM employees;</pre>
+          </li>
+      
+          <li>
+            <strong>3. WHERE:</strong> Filters records that fulfill a specified condition.<br>
+            <pre>SELECT * FROM employees WHERE age &gt; 30;</pre>
+          </li>
+      
+          <li>
+            <strong>4. GROUP BY:</strong> Groups rows that have the same values in specified columns.<br>
+            <pre>SELECT department, COUNT(*) FROM employees GROUP BY department;</pre>
+          </li>
+      
+          <li>
+            <strong>5. HAVING:</strong> Filters groups created by GROUP BY.<br>
+            <pre>SELECT department, COUNT(*) FROM employees 
+      GROUP BY department HAVING COUNT(*) &gt; 5;</pre>
+          </li>
+      
+          <li>
+            <strong>6. ORDER BY:</strong> Sorts the result-set in ascending or descending order.<br>
+            <pre>SELECT * FROM students ORDER BY name ASC;</pre>
+          </li>
+      
+          <li>
+            <strong>7. LIMIT / OFFSET:</strong> Limits the number of rows returned by the query (MySQL/PostgreSQL).<br>
+            <pre>SELECT * FROM students LIMIT 10 OFFSET 5;</pre>
+          </li>
+      
+          <li>
+            <strong>8. DISTINCT:</strong> Removes duplicate rows from the result.<br>
+            <pre>SELECT DISTINCT department FROM employees;</pre>
+          </li>
+      
+          <li>
+            <strong>9. IN:</strong> Used to check if a value exists in a set of values.<br>
+            <pre>SELECT * FROM employees WHERE department IN ('HR', 'IT');</pre>
+          </li>
+      
+          <li>
+            <strong>10. BETWEEN:</strong> Filters the result within a specific range.<br>
+            <pre>SELECT * FROM products WHERE price BETWEEN 100 AND 500;</pre>
+          </li>
+      
+          <li>
+            <strong>11. LIKE:</strong> Searches for a specified pattern in a column.<br>
+            <pre>SELECT * FROM users WHERE name LIKE 'A%';</pre>
+          </li>
+      
+          <li>
+            <strong>12. IS NULL / IS NOT NULL:</strong> Checks for NULL values.<br>
+            <pre>SELECT * FROM employees WHERE manager_id IS NULL;</pre>
+          </li>
+      
+          <li>
+            <strong>13. AS (Alias):</strong> Renames a column or table temporarily.<br>
+            <pre>SELECT name AS student_name FROM students;</pre>
+          </li>
+      
+          <li>
+            <strong>14. JOIN Clauses:</strong> Used to combine rows from two or more tables:
+            <ul>
+              <li><code>INNER JOIN</code> - Only matching rows</li>
+              <li><code>LEFT JOIN</code> - All from left + matched from right</li>
+              <li><code>RIGHT JOIN</code> - All from right + matched from left</li>
+              <li><code>FULL OUTER JOIN</code> - All matched and unmatched from both</li>
+            </ul>
+            <pre>SELECT employees.name, departments.dept_name
+      FROM employees
+      INNER JOIN departments ON employees.dept_id = departments.id;</pre>
+          </li>
+        </ul>
+      </div>
+      <div class="module">
+        <h2>10. Examples for Each SQL Clause</h2>
+      
+        <h3>1. SELECT</h3>
+        <p>Retrieve specific columns from a table.</p>
+        <pre>SELECT name, age FROM students;</pre>
+      
+        <h3>2. FROM</h3>
+        <p>Defines the source table.</p>
+        <pre>SELECT * FROM students;</pre>
+      
+        <h3>3. WHERE</h3>
+        <p>Filters rows based on conditions.</p>
+        <pre>SELECT * FROM students WHERE age &gt; 20;</pre>
+      
+        <h3>4. GROUP BY</h3>
+        <p>Groups rows that share a value in a column.</p>
+        <pre>SELECT department, COUNT(*) FROM employees GROUP BY department;</pre>
+      
+        <h3>5. HAVING</h3>
+        <p>Filters grouped records.</p>
+        <pre>SELECT department, COUNT(*) FROM employees 
+      GROUP BY department 
+      HAVING COUNT(*) &gt; 3;</pre>
+      
+        <h3>6. ORDER BY</h3>
+        <p>Sorts result set.</p>
+        <pre>SELECT * FROM students ORDER BY age DESC;</pre>
+      
+        <h3>7. LIMIT</h3>
+        <p>Limits number of records returned.</p>
+        <pre>SELECT * FROM students LIMIT 5;</pre>
+      
+        <h3>8. OFFSET</h3>
+        <p>Skips a number of rows before beginning to return rows.</p>
+        <pre>SELECT * FROM students LIMIT 5 OFFSET 3;</pre>
+      
+        <h3>9. DISTINCT</h3>
+        <p>Removes duplicate rows.</p>
+        <pre>SELECT DISTINCT department FROM employees;</pre>
+      
+        <h3>10. IN</h3>
+        <p>Checks if value exists in a set.</p>
+        <pre>SELECT * FROM students WHERE class IN ('A', 'B');</pre>
+      
+        <h3>11. BETWEEN</h3>
+        <p>Selects within a range.</p>
+        <pre>SELECT * FROM products WHERE price BETWEEN 100 AND 500;</pre>
+      
+        <h3>12. LIKE</h3>
+        <p>Searches for a pattern.</p>
+        <pre>SELECT * FROM users WHERE name LIKE 'A%';</pre>
+      
+        <h3>13. IS NULL / IS NOT NULL</h3>
+        <p>Checks for NULL values.</p>
+        <pre>SELECT * FROM employees WHERE manager_id IS NULL;</pre>
+      
+        <h3>14. AS (Alias)</h3>
+        <p>Renames a column in the result.</p>
+        <pre>SELECT name AS student_name FROM students;</pre>
+      
+        <h3>15. INNER JOIN</h3>
+        <p>Returns rows with matching values in both tables.</p>
+        <pre>SELECT s.name, c.course_name 
+      FROM students s 
+      INNER JOIN courses c ON s.course_id = c.id;</pre>
+      
+        <h3>16. LEFT JOIN</h3>
+        <p>Returns all rows from the left table, and matched rows from the right.</p>
+        <pre>SELECT e.name, d.name 
+      FROM employees e 
+      LEFT JOIN departments d ON e.dept_id = d.id;</pre>
+      
+        <h3>17. RIGHT JOIN</h3>
+        <p>Returns all rows from the right table, and matched rows from the left.</p>
+        <pre>SELECT e.name, d.name 
+      FROM employees e 
+      RIGHT JOIN departments d ON e.dept_id = d.id;</pre>
+      
+        <h3>18. FULL OUTER JOIN</h3>
+        <p>Returns all records when there is a match in either table.</p>
+        <pre>SELECT e.name, d.name 
+      FROM employees e 
+      FULL OUTER JOIN departments d ON e.dept_id = d.id;</pre>
+      
+        <h3>19. UNION</h3>
+        <p>Combines result-sets of two SELECT statements (no duplicates).</p>
+        <pre>SELECT name FROM students
+      UNION
+      SELECT name FROM teachers;</pre>
+      
+        <h3>20. UNION ALL</h3>
+        <p>Combines result-sets and includes duplicates.</p>
+        <pre>SELECT name FROM students
+      UNION ALL
+      SELECT name FROM teachers;</pre>
+      </div>
+      
+
+    <div class="footer-buttons">
+      <a href="index.html">← Back to Home</a>
+      <a href="advance.html">→ Go to Advance Page</a>
+    </div>
+  </div>
+</body>
+</html>
+</div>
